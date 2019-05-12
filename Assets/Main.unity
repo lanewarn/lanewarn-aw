@@ -271,7 +271,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 369999447}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.1075516, y: 4.97464, z: 3.8371754}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -288,10 +288,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffb78a50c98154185b165ea899f58e08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab_source: {fileID: 4186133578343470, guid: 38ef8fc9b68b14b58b90626156462d02,
+  prefab_source_person: {fileID: 4186133578343470, guid: abef19ce6404249d0a51217927ebc56e,
     type: 2}
-  prefab_space: {fileID: 1577640878}
-  amnt: 1
+  prefab_source_obstacle: {fileID: 4186133578343470, guid: 626e3fe6df82e496e8b9ab69e8dd44cf,
+    type: 2}
+  prefab_source_car: {fileID: 4186133578343470, guid: 38ef8fc9b68b14b58b90626156462d02,
+    type: 2}
+  container: {fileID: 1577640878}
+  unknownDistance: 3
 --- !u!1 &399405131
 GameObject:
   m_ObjectHideFlags: 0

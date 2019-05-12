@@ -9,7 +9,10 @@ using System.Text;
 
 public class Manager : MonoBehaviour {
 
-	public Transform prefab_source;
+
+	public Transform prefab_source_person;
+	public Transform prefab_source_obstacle;
+	public Transform prefab_source_car;
 	public Transform container;
 
 	public int unknownDistance = 3;
@@ -38,8 +41,7 @@ public class Manager : MonoBehaviour {
 				while (!stream.DataAvailable);
 				Byte[] bytes = new Byte[client.Available];
 				stream.Read(bytes, 0, bytes.Length);
-
-				data = Encoding.ASCII.GetString(bytes);
+				data = Encoding.UTF8.GetString(bytes);
 			}
 		}).Start();
 	}
@@ -57,13 +59,29 @@ public class Manager : MonoBehaviour {
 			// Create all elements
 			foreach (String tracked in data.Split('|'))
 			{
+				if (tracked == "") continue;
 				String type = tracked.Split(';')[0];
-				float angle = float.Parse(tracked.Split(';')[1]);
+				float angle = Mathf.Deg2Rad * -float.Parse(tracked.Split(';')[1]);
 				float distance = float.Parse(tracked.Split(';')[2]);
 
 				distance = (distance == -1 ? unknownDistance : distance);
-
-				Instantiate(prefab_source, new Vector3(distance * (float)Math.Cos(angle), 0, distance * (float)Math.Sin(angle)), Quaternion.identity, container);
+				Vector3 pos =  new Vector3(distance * (float)Math.Cos(angle), 0, distance * (float)Math.Sin(angle));
+				switch (type)
+				{
+					case "obstacle":				
+						Instantiate(prefab_source_obstacle, pos, Quaternion.identity, container);
+						break;
+					case "car":				
+						Instantiate(prefab_source_car, pos, Quaternion.identity, container);
+						break;
+					case "person":				
+						Instantiate(prefab_source_person, pos, Quaternion.identity, container);
+						break;
+					default:			
+						Instantiate(prefab_source_obstacle,pos, Quaternion.identity, container);
+						Debug.LogWarning("received unknown type: " + type);
+						break;
+				}
 			}
 
 			data = "";
